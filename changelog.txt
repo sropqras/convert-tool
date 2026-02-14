@@ -1,0 +1,4 @@
+fix: Resolve build error related to 'file-type' default export
+
+- Added a default export to `src/__mocks__/file-type.js`.
+- This addresses the build error: "Attempted import error: 'file-type' does not contain a default export (imported as 'fileType')."
