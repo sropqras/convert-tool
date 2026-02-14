@@ -1,0 +1,55 @@
+{
+  "name": "convert-tool",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.19",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^13.5.0",
+    "autoprefixer": "^10.4.24",
+    "file-type": "^21.3.0",
+    "image-conversion": "^2.1.1",
+    "postcss": "^8.5.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^4.1.18",
+    "web-vitals": "^2.1.4"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(file-type|strtok3|token-types|@borewit/text-codec|@tokenizer/inflate|uint8array-extras)/)"
+    ],
+    "moduleNameMapper": {
+      "strtok3/core": "<rootDir>/node_modules/strtok3/lib/core.js"
+    }
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
