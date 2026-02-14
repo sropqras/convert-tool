@@ -1,5 +1,5 @@
 import { convertImage } from './imageUtils';
-import fileType from 'file-type';
+import { fileTypeFromBuffer } from 'file-type';
 import imageConversion from 'image-conversion';
 
 // Mock file-type and image-conversion
@@ -17,7 +17,7 @@ const createMockFile = (name, type, content = 'mock content') => ({
 describe('convertImage', () => {
   beforeEach(() => {
     // Reset mocks before each test
-    fileType.fromBuffer.mockReset();
+    fileTypeFromBuffer.mockReset();
     imageConversion.compressAccurately.mockReset();
   });
 
@@ -25,12 +25,12 @@ describe('convertImage', () => {
     const mockFile = createMockFile('test.jpeg', 'image/jpeg');
     const mockConvertedBlob = new Blob(['converted content'], { type: 'image/png' });
 
-    fileType.fromBuffer.mockResolvedValue({ ext: 'jpeg', mime: 'image/jpeg' });
+    fileTypeFromBuffer.mockResolvedValue({ ext: 'jpeg', mime: 'image/jpeg' });
     imageConversion.compressAccurately.mockResolvedValue(mockConvertedBlob);
 
     const result = await convertImage(mockFile);
 
-    expect(fileType.fromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
+    expect(fileTypeFromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
     expect(imageConversion.compressAccurately).toHaveBeenCalledWith(mockFile, { type: 'image/png' });
     expect(result).toBeInstanceOf(File);
     expect(result.name).toBe('test.png');
@@ -40,11 +40,11 @@ describe('convertImage', () => {
   it('should return null if file type cannot be determined', async () => {
     const mockFile = createMockFile('unknown.xyz', 'application/octet-stream');
 
-    fileType.fromBuffer.mockResolvedValue(undefined); // Simulate unknown file type
+    fileTypeFromBuffer.mockResolvedValue(undefined); // Simulate unknown file type
 
     const result = await convertImage(mockFile);
 
-    expect(fileType.fromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
+    expect(fileTypeFromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
     expect(imageConversion.compressAccurately).not.toHaveBeenCalled();
     expect(result).toBeNull();
   });
@@ -52,11 +52,11 @@ describe('convertImage', () => {
   it('should return null if file type is not supported for conversion', async () => {
     const mockFile = createMockFile('document.pdf', 'application/pdf');
 
-    fileType.fromBuffer.mockResolvedValue({ ext: 'pdf', mime: 'application/pdf' });
+    fileTypeFromBuffer.mockResolvedValue({ ext: 'pdf', mime: 'application/pdf' });
 
     const result = await convertImage(mockFile);
 
-    expect(fileType.fromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
+    expect(fileTypeFromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
     expect(imageConversion.compressAccurately).not.toHaveBeenCalled();
     expect(result).toBeNull();
   });
@@ -64,12 +64,12 @@ describe('convertImage', () => {
   it('should handle errors during image conversion gracefully', async () => {
     const mockFile = createMockFile('error.png', 'image/png');
 
-    fileType.fromBuffer.mockResolvedValue({ ext: 'png', mime: 'image/png' });
+    fileTypeFromBuffer.mockResolvedValue({ ext: 'png', mime: 'image/png' });
     imageConversion.compressAccurately.mockRejectedValue(new Error('Conversion error'));
 
     await expect(convertImage(mockFile)).rejects.toThrow('Conversion error');
 
-    expect(fileType.fromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
+    expect(fileTypeFromBuffer).toHaveBeenCalledWith(expect.any(ArrayBuffer));
     expect(imageConversion.compressAccurately).toHaveBeenCalledWith(mockFile, { type: 'image/png' });
   });
 
@@ -78,7 +78,7 @@ describe('convertImage', () => {
     const mockFile = createMockFile('test.gif', 'image/gif', 'mock gif content');
     const mockConvertedBlob = new Blob(['converted png content'], { type: 'image/png' });
 
-    fileType.fromBuffer.mockResolvedValue({ ext: 'gif', mime: 'image/gif' });
+    fileTypeFromBuffer.mockResolvedValue({ ext: 'gif', mime: 'image/gif' });
     imageConversion.compressAccurately.mockResolvedValue(mockConvertedBlob);
 
     const result = await convertImage(mockFile);

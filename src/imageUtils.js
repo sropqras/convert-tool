@@ -1,12 +1,12 @@
 // imageUtils.js
 
-import fileType from 'file-type';
+import { fileTypeFromBuffer } from 'file-type';
 import imageConversion from 'image-conversion';
 
 export const convertImage = async (file) => {
   const buffer = await file.arrayBuffer();
   // file-type library is async. So, use await here.
-  const type = await fileType.fromBuffer(buffer);
+  const type = await fileTypeFromBuffer(buffer);
 
   if (!type) {
     console.error("Could not determine file type.");

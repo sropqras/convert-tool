@@ -6,7 +6,7 @@ describe('App', () => {
   it('renders the ImageConverter component', () => {
     render(<App />);
     // Check if the ImageConverter component's title is present
-    const titleElement = screen.getByText(/Image Converter/i);
+    const titleElement = screen.getByText(/Convert Tool/i);
     expect(titleElement).toBeInTheDocument();
   });
 });

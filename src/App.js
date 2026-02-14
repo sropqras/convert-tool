@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ImageConverter from './ImageConverter';
-import './App.css';
+
 
 const App = () => {
   return (
