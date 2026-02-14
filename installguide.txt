@@ -1,0 +1,100 @@
+# Git and Vercel Installation and Deployment Guide
+
+This guide will help you set up Git for your project, publish it to GitHub, and deploy it to Vercel.
+
+## 1. Local Git Initialization and Initial Commit
+
+Your project is already initialized as a Git repository and has an initial commit. If you were starting a new project, the steps would be:
+
+1.  **Initialize Git:**
+    ```bash
+    git init
+    ```
+
+2.  **Add all files to staging:**
+    ```bash
+    git add .
+    ```
+
+3.  **Configure Git User Identity (if not already set):**
+    ```bash
+    git config user.email "your_email@example.com"
+    git config user.name "Your Name"
+    ```
+
+4.  **Make the initial commit:**
+    ```bash
+    git commit -m "Initial commit"
+    ```
+
+## 2. Publishing to GitHub
+
+To publish your local Git repository to GitHub:
+
+1.  **Create a new repository on GitHub:**
+    *   Go to [github.com/new](https://github.com/new).
+    *   Choose a repository name (e.g., `convert-tool`).
+    *   Keep it public or private as you prefer.
+    *   **DO NOT** initialize the repository with a README, .gitignore, or license, as your local project already has these.
+    *   Click 'Create repository'.
+
+2.  **Add the GitHub repository as a remote and push your code:**
+    *   GitHub will provide you with commands after creating the repository. It will look something like this (replace `<YOUR_USERNAME>` and `<YOUR_REPO_NAME>` with your actual GitHub username and repository name):
+        ```bash
+        git remote add origin https://github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>.git
+        git branch -M main
+        git push -u origin main
+        ```
+    *   Execute these commands in your local terminal.
+
+## 3. Deploying to Vercel
+
+There are two main ways to deploy to Vercel: directly from the CLI or by linking to a GitHub repository.
+
+### Option A: Deploying Directly from Vercel CLI
+
+This option is useful for quick deployments or testing, but does not link to a Git repository for continuous deployment.
+
+1.  **Install Vercel CLI (if you haven't already):**
+    ```bash
+    npm install -g vercel
+    ```
+
+2.  **Log in to Vercel:**
+    ```bash
+    vercel login
+    ```
+    Follow the prompts in your browser to log in with your Vercel account.
+
+3.  **Navigate to your project directory:**
+    Ensure you are in the root directory of your project (where `package.json` is located).
+
+4.  **Deploy your project:**
+    ```bash
+    vercel deploy --prod
+    ```
+    This command will build your project and deploy it to Vercel. The `--prod` flag deploys it to your production domain. If you want a preview URL, you can omit `--prod`.
+
+    Alternatively, to build locally first and then deploy the build folder:
+    ```bash
+    npm run build
+    vercel deploy build --prod
+    ```
+
+### Option B: Deploying from GitHub (Recommended for Continuous Deployment)
+
+This is the recommended approach for continuous deployment, where every push to your GitHub repository triggers a new Vercel deployment.
+
+1.  **Ensure your project is published to GitHub** (as described in "2. Publishing to GitHub" above).
+
+2.  **Connect Vercel to your GitHub repository:**
+    *   Go to [vercel.com/new](https://vercel.com/new).
+    *   Click on 'Continue with GitHub'.
+    *   Grant Vercel access to your GitHub account (if you haven't already).
+    *   Select the GitHub repository you just created (e.g., `convert-tool`).
+    *   Vercel will automatically detect that it's a Create React App project and suggest the correct build settings. You can review and confirm.
+    *   Click 'Deploy'.
+
+    After the initial setup, any future pushes to your configured Git branches (e.g., `main`) will automatically trigger new deployments on Vercel.
+
+After any successful deployment, Vercel will provide you with a URL where your application is live.
